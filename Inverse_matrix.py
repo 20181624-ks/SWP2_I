@@ -1,4 +1,4 @@
-from fractions import Fraction
+import fractions
 
 #mat1 벡터를 a배해서 mat2 벡터에 더함
 def as_vector(mat1,a,mat2):
@@ -12,7 +12,7 @@ def div_vector(mat,a):
     m = len(mat)
     for i in range(m):
         #mat[i] /= a
-        mat[i] = Fraction(mat[i],a)
+        mat[i] = fractions.Fraction(mat[i],a)
     return mat
 
 #벡터의 행을 서로 바꿈
@@ -92,14 +92,26 @@ def back_eli(mat,idmat):
 
     return mat,idmat
 
-
+def pretty_fraction(mat):
+    for i in range(len(mat)):
+        for j in range(len(mat[0])):
+            if (mat[i][j] - int(mat[i][j])) != 0:
+                frac = fractions.Fraction(mat[i][j])
+                mat[i][j] = str(frac.numerator) + "/" + str(frac.denominator)
+            else:
+                mat[i][j] = f"{int(mat[i][j])}"
+    return mat
 #mat = [[1,2,3],[2,5,3],[1,0,8]]
-#mat = [[2,0,1],[-2,3,4],[-5,5,6]]
-mat = [[2,2,0],[-2,1,1],[3,0,1]]
+mat = [[2,0,1],[-2,3,4],[-5,5,6]]
+#mat = [[2,2,0],[-2,1,1],[3,0,1]]
 idmat = identity_matrix(mat)
 pivoted_mat = pivoting(mat)
 
 for_eli(pivoted_mat,idmat)
-print(for_eli(pivoted_mat,idmat))
 back_eli(pivoted_mat,idmat)
-print(back_eli(pivoted_mat,idmat))
+inverse_mat = idmat
+print(inverse_mat)
+
+pretty_fraction(inverse_mat)
+print(inverse_mat)
+
